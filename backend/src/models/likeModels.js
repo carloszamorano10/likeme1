@@ -17,3 +17,16 @@ export const getlikeModels = async ()=>{
     return response.rows
 }
 
+export const modifyLikeModels = async (id)=>{
+   const sqlQuery = "UPDATE posts SET likes = likes + 1 WHERE id = $1 RETURNING *"
+   const values = [id]
+   const result = await pool.query(sqlQuery, values)
+   return result.rows[0]
+}
+
+export const deleteLikesModels = async (id)=>{
+    const sqlQuery = "DELETE FROM posts WHERE id = $1 RETURNING *"
+    const values = [id]
+    const result = await pool.query(sqlQuery, values)
+    return result.rows
+}
